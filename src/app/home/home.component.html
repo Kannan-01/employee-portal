@@ -1,0 +1,62 @@
+<div class="d-flex">
+  <div
+    *ngIf="showSidebar == true"
+    style="height: 93vh; width: 250px; background-color: #f2f2f2"
+    class="sidebar text-light p-3 d-flex flex-column"
+  >
+    <a routerLink="/dashboard">Home</a>
+    <a routerLink="/users">Users</a>
+    <button (click)="logout()" class="btn mt-auto btn-dark">Logout <i class="fa-solid fa-right-from-bracket"></i></button>
+  </div>
+  <div class="dashboard p-3 w-100">
+    <div class="row">
+      <div class="col-lg-8">
+        <div
+          style="
+            height: 180px;
+            background-image: radial-gradient(
+              circle farthest-corner at 10% 20%,
+              rgba(255, 252, 200, 1) 0%,
+              rgba(255, 247, 94, 1) 90%
+            );
+          "
+          class="admin-banner rounded d-flex align-items-center shadow text-muted"
+        >
+          <h1 class="ms-5">
+            <i
+              (click)="menuClick()"
+              class="fa-solid fa-bars btn fa-1x text-muted border-0"
+            ></i>
+            <span class="ms-2 fw-bold">
+              Welcome
+              {{ admin }}
+            </span>
+          </h1>
+        </div>
+
+        <div class="row m-4 bo">
+          <div class="col-lg-5 rounded">
+            <mat-card class="demo-inline-calendar-card">
+              <mat-calendar [(selected)]="selected"></mat-calendar>
+            </mat-card>
+          </div>
+          <div class="col-lg-1"></div>
+          <div class="col-lg-6 border rounded">
+            <app-chart></app-chart>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="edit-admin border rounded shadow p-2">
+       <app-update-admin (onAdminChange)="getUpdatedAdmin($event)"></app-update-admin>
+        </div>
+        <div
+          style="height: 150px"
+          class="border rounded shadow p-2 bg-dark text-light d-flex align-items-center justify-content-center mt-3"
+        >
+          <h2><i class="fa-solid fa-users"></i> Employees : {{empCount}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

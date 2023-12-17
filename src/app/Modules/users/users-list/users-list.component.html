@@ -1,0 +1,99 @@
+<div class="d-flex">
+  <div
+    style="height: 93vh; width: 250px; background-color: #f2f2f2"
+    class="sidebar text-light p-3 d-flex flex-column"
+  >
+    <a routerLink="/dashboard">Home</a>
+    <a routerLink="/users">Users</a>
+  </div>
+  <div class="dashboard p-3 w-100">
+    <div class="d-flex justify-content-between mb-3">
+      <h3>Users List</h3>
+      <button routerLink="add" class="btn text-dark">
+        <i class="fa-solid fa-user-plus"></i>
+      </button>
+    </div>
+    <!-- search bar -->
+    <div class="d-flex align-items-center mb-3">
+      <input
+        class="form-control"
+        placeholder="search by username"
+        [(ngModel)]="searchKey"
+      />
+      <i
+        style="margin-left: -30px"
+        class="fa-solid fa-magnifying-glass fa-1x"
+      ></i>
+    </div>
+    <!-- dropdown -->
+    <div class="d-flex">
+      <div>
+        <button
+          class="btn btn-outline-dark mb-3"
+          mat-button
+          [matMenuTriggerFor]="menu"
+        >
+          Menu
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="sortById()" mat-menu-item>sort by id</button>
+          <button (click)="sortByName()" mat-menu-item>sort by name</button>
+        </mat-menu>
+      </div>
+      <div class="ms-auto">
+        <button (click)="generatePdf()" class="btn btn-outline-success">
+          Export <i class="fa-regular fa-file-pdf"></i>
+        </button>
+      </div>
+    </div>
+    <div class="card p-5">
+      <!-- table-bordered -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr
+            *ngFor="
+              let user of allUsers
+                | search : searchKey
+                | paginate : { itemsPerPage: 5, currentPage: p }
+            "
+            [hidden]="user.id == '1'"
+          >
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td [ngClass]="user.active == '1' ? 'text-success' : 'text-danger'">
+              {{ user.active == "1" ? "Active" : "Inactive" }}
+            </td>
+            <td>
+              <div>
+                <a routerLink="edit/{{ user.id }}">
+                  <i class="fa-solid fa-pen btn" style="color: green"></i>
+                </a>
+                <i
+                  (click)="removeUser(user.id)"
+                  class="fa-solid fa-trash-can btn"
+                  style="color: red"
+                ></i>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="(allUsers | search : searchKey).length === 0">
+            <p class="text-muted fw-bolder">user does not exist !</p>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

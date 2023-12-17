@@ -1,0 +1,70 @@
+<div
+  class="d-flex justify-content-center align-items-center fullbg"
+  style="height: 100vh"
+>
+  <div
+    class="d-flex border border-1 p-5 align-items-center justify-content-center"
+    style="width: 70%; height: 60%"
+  >
+    <div style="width: 40%; height: 100%">
+      <img
+        style="width: 100%"
+        src="https://img.freepik.com/free-vector/access-control-system-abstract-concept-vector-illustration-security-system-authorize-entry-login-credentials-electronic-access-password-passphrase-pin-verification-abstract-metaphor_335657-5746.jpg?w=740&t=st=1701885980~exp=1701886580~hmac=33be59e24044563126152f75c7cc3b5e01635b758ba8f3fd2ad6cd59c556ef5f"
+        alt=""
+      />
+    </div>
+
+    <div style="width: 60%; height: 100%; background-color: white">
+      <div class="mt-5">
+        <h2>Login</h2>
+        <form #loginForm="ngForm" (ngSubmit)="login()">
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control"
+              id="floatingInput"
+              placeholder="name@example.com"
+              name="email"
+              [(ngModel)]="email"
+              email
+              required
+              #userEmailInput="ngModel"
+            />
+            <label for="floatingInput">Email address</label>
+          </div>
+          <!-- invalid email -->
+          <div
+            *ngIf="userEmailInput.invalid && userEmailInput.touched"
+            class="mb-3 text-danger"
+          >
+            <p>invalid email</p>
+          </div>
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control"
+              id="floatingPassword"
+              placeholder="Password"
+              name="password"
+              [(ngModel)]="password"
+              required
+              pattern="[a-zA-Z0-9]*"
+              minlength="3"
+              #userPassword="ngModel"
+            />
+            <label for="floatingPassword">Password</label>
+          </div>
+          <div
+            *ngIf="userPassword.invalid && userPassword.touched"
+            class="mb-3 text-danger"
+          >
+            <p>invalid password</p>
+          </div>
+          <div class="d-grid mt-4">
+            <button [disabled]="loginForm.invalid" type="submit" class="btn btn-dark">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
